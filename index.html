@@ -102,6 +102,30 @@
         height:100vh;
         display:block;
         }
+        .controlBtn{
+        width:70px;
+        height:70px;
+        border-radius:50%;
+        border:none;
+        margin:5px;
+
+        font-size:32px;
+        font-weight:bold;
+
+        background:rgba(255,255,255,0.2);
+        color:white;
+
+        backdrop-filter: blur(4px);
+        }
+    #mobileControls{
+    display:none;
+    position:absolute;
+    bottom:30px;
+    left:30px;
+    z-index:999;
+    user-select:none;
+    touch-action: none;
+    }
     </style>
 </head>
 
@@ -185,7 +209,39 @@
             color:white;
         ">
             START
+        
         </button>
+
+        </div>
+        <div id="mobileControls">
+
+        <div class="row">
+    <button class="controlBtn"
+        ontouchstart="pressKey('w')"
+        ontouchend="releaseKey('w')">
+        ↑
+    </button>
+    </div>
+
+    <div class="row">
+        <button class="controlBtn"
+            ontouchstart="pressKey('a')"
+            ontouchend="releaseKey('a')">
+            ←
+        </button>
+
+        <button class="controlBtn"
+            ontouchstart="pressKey('s')"
+            ontouchend="releaseKey('s')">
+            ↓
+        </button>
+
+        <button class="controlBtn"
+            ontouchstart="pressKey('d')"
+            ontouchend="releaseKey('d')">
+            →
+        </button>
+    </div>
     </div>
 
     <script>
@@ -256,6 +312,14 @@
     // ===== INPUT =====
     let keys={};
 
+    function pressKey(key){
+        keys[key]=true;
+    }
+
+    function releaseKey(key){
+        keys[key]=false;
+    }
+
     document.addEventListener("keydown",e=>{
         keys[e.key.toLowerCase()]=true;
 
@@ -264,13 +328,15 @@
         state="play";
 
         document.getElementById("mobileStart").style.display="none";
-    }
+        document.getElementById("mobileControls").style.display="block";
+        }
 
         if(e.key==="r"){
         reset_game();
         state="tutorial";
 
         document.getElementById("mobileStart").style.display="block";
+        document.getElementById("mobileControls").style.display="none";
     }
 
         if(e.key==="Escape" && state==="play"){
@@ -613,11 +679,13 @@
 
     function startGame(){
 
-        reset_game();
-        state="play";
+    reset_game();
+    state="play";
 
-        document.getElementById("mobileStart").style.display="none";
-    }
+    document.getElementById("mobileStart").style.display="none";
+
+    document.getElementById("mobileControls").style.display="block";
+}
 
 </script>
 
