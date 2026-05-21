@@ -267,9 +267,11 @@
     }
 
         if(e.key==="r"){
-            reset_game();
-            state="tutorial";
-        }
+        reset_game();
+        state="tutorial";
+
+        document.getElementById("mobileStart").style.display="block";
+    }
 
         if(e.key==="Escape" && state==="play"){
             paused=true;
