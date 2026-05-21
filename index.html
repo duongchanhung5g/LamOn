@@ -94,6 +94,14 @@
             max-height: 80vh;
             border-radius: 20px;
         }
+        #gameScreen{
+            position: relative;
+        }
+        canvas{
+        width:100vw;
+        height:100vh;
+        display:block;
+        }
     </style>
 </head>
 
@@ -156,14 +164,36 @@
     </div>
 
     <div id="gameScreen" style="display:none;">
+
     <canvas id="game"></canvas>
+
+    <div id="mobileStart" style="
+        display:none;
+        position:absolute;
+        left:50%;
+        top:80%;
+        transform:translateX(-50%);
+        z-index:999;
+    ">
+        <button onclick="startGame()"
+        style="
+            padding:15px 40px;
+            font-size:28px;
+            border:none;
+            border-radius:15px;
+            background:green;
+            color:white;
+        ">
+            START
+        </button>
+    </div>
 
     <script>
     const canvas = document.getElementById("game");
     const ctx = canvas.getContext("2d");
 
-    const WIDTH = 1000;
-    const HEIGHT = 600;
+    const WIDTH = window.innerWidth;
+    const HEIGHT = window.innerHeight;
 
     canvas.width = WIDTH;
     canvas.height = HEIGHT;
@@ -230,9 +260,11 @@
         keys[e.key.toLowerCase()]=true;
 
         if(state==="tutorial" && e.key==="Enter"){
-            reset_game();
-            state="play";
-        }
+        reset_game();
+        state="play";
+
+        document.getElementById("mobileStart").style.display="none";
+    }
 
         if(e.key==="r"){
             reset_game();
@@ -279,17 +311,21 @@
 
             ctx.fillStyle="black";
             ctx.font="22px Arial";
+
             let lines=[
                 "WASD: Move",
                 "Dodge bombs & blaster",
                 "Survive 4m20s",
                 "Every 30s heal phase",
                 "ESC pause | C continue",
-                "ENTER to start"
+                "ENTER or tap START"
             ];
+
             lines.forEach((l,i)=>ctx.fillText(l,100,200+i*40));
+
             return;
         }
+
 
         // ===== GAME =====
         if(state==="play"){
@@ -564,13 +600,22 @@
 
     function showGame() {
 
-    document.getElementById("mainScreen").style.display = "none";
+        document.getElementById("mainScreen").style.display = "none";
 
-    document.getElementById("gameScreen").style.display = "block";
+        document.getElementById("gameScreen").style.display = "block";
 
-    document.getElementById("bonusMusic").play();
+        document.getElementById("bonusMusic").play();
 
-}
+        document.getElementById("mobileStart").style.display = "block";
+    }
+
+    function startGame(){
+
+        reset_game();
+        state="play";
+
+        document.getElementById("mobileStart").style.display="none";
+    }
 
 </script>
 
