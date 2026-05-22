@@ -24,11 +24,10 @@
         }
 
         h1 {
-            margin-bottom: 50px;
-            font-size: 40px;
-            color: white;
+        margin-bottom: 50px;
+        font-size: clamp(24px, 4vw, 40px);
+        color: white;
         }
-
         .main {
             display: flex;
             align-items: center;
@@ -45,9 +44,11 @@
         }
 
         .images img {
-            width: 250px;
-            border-radius: 15px;
-        }
+        width: min(250px, 35vw);
+        max-width: 100%;
+        height: auto;
+        border-radius: 15px;
+        }   
 
         .buttons {
             margin-top: 20px;
@@ -98,25 +99,26 @@
             position: relative;
         }
         canvas{
-        width:100vw;
-        height:100vh;
         display:block;
-        }
-        .controlBtn{
-        width:70px;
-        height:70px;
+        width:100%;
+        height:100%;
+    }
+    .controlBtn{
+        width:min(70px,18vw);
+        height:min(70px,18vw);
+
         border-radius:50%;
         border:none;
         margin:5px;
 
-        font-size:32px;
+        font-size:min(32px,8vw);
         font-weight:bold;
 
         background:rgba(255,255,255,0.2);
         color:white;
 
         backdrop-filter: blur(4px);
-        }
+    }
     #mobileControls{
     display:none;
     position:absolute;
@@ -126,9 +128,32 @@
     user-select:none;
     touch-action: none;
     }
+    @media (max-width: 768px) {
+
+    .main{
+        flex-direction: column;
+        gap:20px;
+    }
+
+    .text{
+        width:90%;
+        font-size:20px;
+        line-height:32px;
+    }
+
+    h1{
+        font-size:28px;
+        padding:0 10px;
+    }
+
+    button{
+        font-size:18px;
+        padding:10px 25px;
+    }
+    }
     </style>
 </head>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <body>
 
     <!-- Màn hình đầu -->
@@ -248,11 +273,19 @@
     const canvas = document.getElementById("game");
     const ctx = canvas.getContext("2d");
 
-    const WIDTH = window.innerWidth;
-    const HEIGHT = window.innerHeight;
+    let WIDTH, HEIGHT;
 
-    canvas.width = WIDTH;
-    canvas.height = HEIGHT;
+    function resizeCanvas() {
+        WIDTH = window.innerWidth;
+        HEIGHT = window.innerHeight;
+
+        canvas.width = WIDTH;
+        canvas.height = HEIGHT;
+    }
+
+    resizeCanvas();
+
+    window.addEventListener("resize", resizeCanvas);
 
     // ===== LOAD =====
     let heart = new Image(); heart.src="heart.png";
