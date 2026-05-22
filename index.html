@@ -151,6 +151,26 @@
         padding:10px 25px;
     }
     }
+    #mobileReset{
+    display:none;
+    position:absolute;
+    top:20px;
+    right:20px;
+    z-index:999;
+}
+
+    .resetBtn{
+        padding:10px 20px;
+        font-size:min(22px,5vw);
+
+        border:none;
+        border-radius:12px;
+
+        background:red;
+        color:white;
+
+        font-weight:bold;
+    }
     </style>
 </head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -245,6 +265,11 @@
         ontouchstart="pressKey('w')"
         ontouchend="releaseKey('w')">
         ↑
+    </button>
+    </div>
+    <div id="mobileReset">
+    <button onclick="resetMobileGame()" class="resetBtn">
+        RESET
     </button>
     </div>
 
@@ -712,14 +737,27 @@
 
     function startGame(){
 
+        reset_game();
+        state="play";
+
+        document.getElementById("mobileStart").style.display="none";
+
+        document.getElementById("mobileControls").style.display="block";
+
+        document.getElementById("mobileReset").style.display="block";
+    }
+    function resetMobileGame(){
+
     reset_game();
-    state="play";
 
-    document.getElementById("mobileStart").style.display="none";
+    state="tutorial";
 
-    document.getElementById("mobileControls").style.display="block";
+    document.getElementById("mobileStart").style.display="block";
+
+    document.getElementById("mobileControls").style.display="none";
+
+    document.getElementById("mobileReset").style.display="none";
 }
-
 </script>
 
 </body>
